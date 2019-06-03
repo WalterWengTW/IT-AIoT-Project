@@ -42,7 +42,7 @@ DelayCount = 0
 #********************************************************************************************
 def NetInitialize():
     
-    options = {"pbLoad": "tiny-yolo-hand-detect.pb", "threshold": 0.3, 
+    options = {"pbLoad": "tiny-yolo-hand-detect.pb", "threshold": 0.4, 
                "metaLoad": "tiny-yolo-hand-detect.meta", "gpu": 1.0}
     
     return TFNet(options)
@@ -167,7 +167,7 @@ def Detecting(Image, predictions):
         DelayCount-=1
         
     
-    if MaxConfidenceSet['confidence']> 0.35:
+    if MaxConfidenceSet['confidence']> 0.4:
 #        label = MaxConfidenceSet['label'] + " " + str(MaxConfidenceSet['confidence'])
 #        Image = cv2.rectangle(Image, (top_x, top_y), (btm_x, btm_y), (255,0,0), 3)
 #        Image = cv2.putText(Image, label, (top_x, top_y-5), cv2.FONT_HERSHEY_COMPLEX_SMALL , 0.8, (0, 230, 0), 1, cv2.LINE_AA)
@@ -180,22 +180,22 @@ def Detecting(Image, predictions):
                 DelayCount = 20
         if box_x < ArrowXtop and (box_y>ArrowYtop and box_y<ArrowYbtm) and int(Ready):
             if not Direct:
-                winsound.PlaySound(r"./button03b.wav", winsound.SND_FILENAME|winsound.SND_ASYNC|winsound.SND_NOWAIT)
+                winsound.PlaySound(r"./left.wav", winsound.SND_FILENAME|winsound.SND_ASYNC|winsound.SND_NOWAIT)
                 Direct = 1 #left
                 Ready = False
         elif box_x > ArrowXbtm and (box_y>ArrowYtop and box_y<ArrowYbtm) and int(Ready):
             if not Direct:
-                winsound.PlaySound(r"./button03b.wav", winsound.SND_FILENAME|winsound.SND_ASYNC|winsound.SND_NOWAIT)
+                winsound.PlaySound(r"./right.wav", winsound.SND_FILENAME|winsound.SND_ASYNC|winsound.SND_NOWAIT)
                 Direct = 2 #right
                 Ready = False
         elif box_y < ArrowYtop and (box_x>ArrowXtop and box_x<ArrowXbtm) and int(Ready):
             if not Direct:
-                winsound.PlaySound(r"./button03b.wav", winsound.SND_FILENAME|winsound.SND_ASYNC|winsound.SND_NOWAIT)
+                winsound.PlaySound(r"./up.wav", winsound.SND_FILENAME|winsound.SND_ASYNC|winsound.SND_NOWAIT)
                 Direct = 3 #top
                 Ready = False
         elif box_y > ArrowYbtm and (box_x>ArrowXtop and box_x<ArrowXbtm) and int(Ready):
             if not Direct:
-                winsound.PlaySound(r"./button03b.wav", winsound.SND_FILENAME|winsound.SND_ASYNC|winsound.SND_NOWAIT)
+                winsound.PlaySound(r"./down.wav", winsound.SND_FILENAME|winsound.SND_ASYNC|winsound.SND_NOWAIT)
                 Direct = 4 #bottom
                 Ready = False
         else:
@@ -220,7 +220,7 @@ def Detecting(Image, predictions):
             Hand_Left_pre = Hand_Left
             Hand_Right_pre = Hand_Right
         if WaveCount >= 4 and int(Ready):
-            winsound.PlaySound(r"./guitar.wav", winsound.SND_FILENAME|winsound.SND_ASYNC|winsound.SND_NOWAIT)
+            winsound.PlaySound(r"./NotClear.wav", winsound.SND_FILENAME|winsound.SND_ASYNC|winsound.SND_NOWAIT)
             Direct = 5
             WaveCount = 0
             Ready = False
@@ -254,11 +254,11 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 root = tk.Tk()
 root.title("opencv + tkinter")
-root.geometry("640x800")
+root.geometry("1280x480")
 #root.protocol('WM_DELETE_WINDOW', detector)
 
 panel = tk.Label(root)  # initialize image panelq
-panel.pack(padx=10, pady=10, side='bottom')
+panel.pack(padx=10, pady=10, side='right')
 
 #root.config(cursor="arrow")
 
